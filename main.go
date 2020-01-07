@@ -6,4 +6,6 @@ func main() {
 	reader := reader_writer.Reader{}
 	reader.Read("./main.go")
 	reader.Show()
+	reader.Replace(9, "   reader.Test()")
+	reader.Show()
 }
