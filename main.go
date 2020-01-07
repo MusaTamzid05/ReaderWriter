@@ -8,4 +8,6 @@ func main() {
 	reader.Show()
 	reader.Replace(9, "   reader.Test()")
 	reader.Show()
+
+	reader_writer.WriteDataTo("./test.txt", reader.Lines)
 }
