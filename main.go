@@ -27,7 +27,9 @@ func editConfigFrom(src_config ,checkpointPath ,  dst_config string) {
 }
 
 func getDstConfigPath(srcPath string) string  {
-	return strings.Split(srcPath , ".config")[0] + "_edited.config"
+	data := strings.Split(srcPath , "/")
+
+	return data[len(data) - 1] + "_edited.config"
 }
 
 func main() {
@@ -42,6 +44,6 @@ func main() {
 		log.Fatalln("Usage: -src pipeline.config -checkpoint path_checkpoint")
 	}
 
-	dstPath := getDstConfigPath(*srcPathPtr)
+	dstPath := getDstConfigPath(*checkpointPathPtr)
 	editConfigFrom(*srcPathPtr , *checkpointPathPtr ,  dstPath)
 }
