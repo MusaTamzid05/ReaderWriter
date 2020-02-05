@@ -95,7 +95,7 @@ func (r *Reader) ReplaceWith(data map[string]string) {
 				currentValue = value
 			}
 
-			newLine := r.getReplacement(line , currentValue)
+			newLine := r.getReplacement(line , "\"" +  currentValue + "\"")
 			r.Replace(index + 1 , newLine)
 			break
 		}
