@@ -17,5 +17,5 @@ func main() {
 	}
 
 	reader.ReplaceWith(dataMap)
-	reader.Show()
+	reader_writer.WriteDataTo("./pipeline_edited.config" , reader.Lines)
 }
