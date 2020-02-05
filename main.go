@@ -1,10 +1,15 @@
 package main
 
-import "reader_writer/reader_writer"
+import (
+	"reader_writer/reader_writer"
+	"flag"
+	"log"
+	"strings"
+)
 
-func main() {
+func editConfigFrom(src_config , dst_config string) {
 	reader := reader_writer.Reader{}
-	reader.Read("./pipeline.config")
+	reader.Read(src_config)
 
 	dataMap := map[string]string {
 		"num_classes" : "2" ,
@@ -17,5 +22,24 @@ func main() {
 	}
 
 	reader.ReplaceWith(dataMap)
-	reader_writer.WriteDataTo("./pipeline_edited.config" , reader.Lines)
+	reader_writer.WriteDataTo(dst_config , reader.Lines)
+}
+
+func getDstConfigPath(srcPath string) string  {
+	return strings.Split(srcPath , ".config")[0] + "_edited.config"
+}
+
+func main() {
+	
+	srcPathPtr := flag.String("src" , "" , "src pipeline config path")
+
+
+	flag.Parse()
+
+	if *srcPathPtr == ""  {
+		log.Fatalln("Usage: -src pipeline.config")
+	}
+
+	dstPath := getDstConfigPath(*srcPathPtr)
+	editConfigFrom(*srcPathPtr , dstPath)
 }
