@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
+	"strconv"
 )
 
 type Reader struct {
@@ -95,7 +96,16 @@ func (r *Reader) ReplaceWith(data map[string]string) {
 				currentValue = value
 			}
 
-			newLine := r.getReplacement(line , "\"" +  currentValue + "\"")
+
+			_ , err := strconv.ParseInt(currentValue , 10 , 32)
+
+			var newLine string
+
+			if err != nil  {
+				newLine = r.getReplacement(line , "\"" +  currentValue + "\"")
+			} else {
+				newLine = r.getReplacement(line ,   currentValue)
+			}
 			r.Replace(index + 1 , newLine)
 			break
 		}
