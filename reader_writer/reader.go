@@ -75,6 +75,11 @@ func (r *Reader) ReplaceWith(data map[string]string) {
 				continue
 			}
 
+			if currentKey == "fine_tune_checkpoint" {
+				if strings.Contains(line , "fine_tune_checkpoint_type") {
+					continue
+				}
+			}
 			currentValue := ""
 
 			if currentKey != key {

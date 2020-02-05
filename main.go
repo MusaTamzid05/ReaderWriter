@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func editConfigFrom(src_config , dst_config string) {
+func editConfigFrom(src_config ,checkpointPath ,  dst_config string) {
 	reader := reader_writer.Reader{}
 	reader.Read(src_config)
 
@@ -15,6 +15,7 @@ func editConfigFrom(src_config , dst_config string) {
 		"num_classes" : "2" ,
 		"batch_size" : "12",
 		"num_steps" : "2000",
+		"fine_tune_checkpoint" : checkpointPath + "/model.ckpt" ,
 		"label_map_path" : "/home/musa/python_pro/trainer_package/generated_data/label.pbtxt",
 		"num_examples" : "59",
 		"input_path_train" : "/home/musa/python_pro/trainer_package/generated_data/train.record",
@@ -32,14 +33,15 @@ func getDstConfigPath(srcPath string) string  {
 func main() {
 	
 	srcPathPtr := flag.String("src" , "" , "src pipeline config path")
+	checkpointPathPtr := flag.String("checkpoint" , "" , "checkpoint path for model")
 
 
 	flag.Parse()
 
-	if *srcPathPtr == ""  {
-		log.Fatalln("Usage: -src pipeline.config")
+	if *srcPathPtr == ""  || *checkpointPathPtr == ""{
+		log.Fatalln("Usage: -src pipeline.config -checkpoint path_checkpoint")
 	}
 
 	dstPath := getDstConfigPath(*srcPathPtr)
-	editConfigFrom(*srcPathPtr , dstPath)
+	editConfigFrom(*srcPathPtr , *checkpointPathPtr ,  dstPath)
 }
