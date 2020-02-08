@@ -13,17 +13,18 @@ type Reader struct {
 	Lines []string
 }
 
-func (r *Reader) Read(path string) {
+func (r *Reader) Read(path string) error {
 
 	strData := r.read(path)
 
 	if strData == "" {
 		log.Printf("Could not read %s.", path)
-		return
+		return errors.New("Read Failed")
 	}
 
 	r.Lines = strings.Split(strData, "\n")
 	fmt.Printf("Total %d Lines read.\n", len(r.Lines))
+	return nil
 
 }
 

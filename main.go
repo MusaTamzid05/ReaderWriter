@@ -9,7 +9,11 @@ import (
 
 func editConfigFrom(src_config ,checkpointPath ,  dst_config string) {
 	reader := reader_writer.Reader{}
-	reader.Read(src_config)
+	err := reader.Read(src_config)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	dataMap := map[string]string {
 		"num_classes" : "2" ,
